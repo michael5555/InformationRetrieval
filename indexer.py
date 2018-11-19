@@ -67,6 +67,7 @@ class Indexer(object):
             else:
                 print("warning: no content in %s" % filename)
             iw.addDocument(doc)
+        iw.close()
 
 if __name__ == '__main__':
     lucene.initVM(vmargs=['-Djava.awt.headless=true'])

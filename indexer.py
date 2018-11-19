@@ -46,7 +46,7 @@ class Indexer(object):
         t1.setIndexOptions(IndexOptions.DOCS_AND_FREQS)
 
         t2 = FieldType()
-        t2.setStored(False)
+        t2.setStored(True)
         t2.setTokenized(True)
         t2.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS)
 

@@ -10,6 +10,7 @@ from org.apache.lucene.store import FSDirectory, SimpleFSDirectory
 from org.apache.lucene.index import (IndexWriter, IndexReader,
                                      DirectoryReader, Term,
                                      IndexWriterConfig)
+from org.apache.lucene.analysis.miscellaneous import LimitTokenCountAnalyzer
 
 from org.apache.lucene.queryparser.classic import QueryParser
 from org.apache.lucene.analysis.standard import StandardAnalyzer
@@ -23,7 +24,8 @@ class SimpleSearcher(object):
         Search an index with facets by using simple term query
         return a list of FacetResult instances
         """
-        query = TermQuery(Term(TEXT, query))
+        analyzer = LimitTokenCountAnalyzer(StandardAnalyzer(), 1048576)
+        query = QueryParser("contents", analyzer).parse(query)
         return self.searchWithQuery(query, indexReader)
 
     def searchWithQuery(cls, query, indexReader):
@@ -40,7 +42,7 @@ class SimpleSearcher(object):
 		
 if __name__ == '__main__':
     lucene.initVM(vmargs=['-Djava.awt.headless=true'])
-    searchValues = ['is', 'tree', "I", 'love' , 'cars', "I love cars.", '1']
+    searchValues = ['I', 'This', 'Information Retrieval is an interesting course.', '1.txt']
     baseDir = os.path.dirname(os.path.abspath(sys.argv[0]))
 	
 		
@@ -55,7 +57,7 @@ if __name__ == '__main__':
         facetRes = SimpleSearcher().searchWithTerm(term, indexReader)
         print(len(facetRes))
         for value in facetRes:
-            print(value.doc)
+            print(value)
 
     print("Checking all documents")
     query = MatchAllDocsQuery()

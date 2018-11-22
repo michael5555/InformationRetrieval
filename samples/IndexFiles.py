@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-INDEX_DIR = "IndexFiles.index"
+INDEX_DIR = "../IR.Index"
 
 import sys, os, lucene, threading, time
 from datetime import datetime

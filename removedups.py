@@ -8,6 +8,6 @@ if __name__ == '__main__':
         readfile = sys.argv[1]
         outfile = sys.argv[2]
 
-        toclean = pd.read_csv(readfile,header=None,names=["id","idfloatminusone","text","redditid","subreddit","metareddit","time","author","ups","downs","authorlinkkarma","authorkarma","authorisgold"])
-        deduped = toclean.drop_duplicates(["text","author"])
+        toclean = pd.read_csv(readfile,header=None,skiprows=2)
+        deduped = toclean.drop_duplicates([2,7])
         deduped.to_csv(outfile)

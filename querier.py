@@ -72,5 +72,9 @@ if __name__ == '__main__':
             text = doc.get("text")
             author = doc.get("author")
 
-            print("text: {0} \nauthor: {1} \nscore: {2}\n".format(text,author,res.score))
+            sub = doc.get("subreddit")
+            meta = doc.get("metareddit")
+
+
+            print("subreddit: {0}\nmetareddit: {1}\ntext: {2} \nauthor: {3} \nscore: {4}\n".format(sub,meta,text,author,res.score))
 

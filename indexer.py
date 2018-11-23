@@ -42,6 +42,8 @@ class Indexer(object):
             next(csvreader)
             for row in csvreader:
                 doc = Document()
+                doc.add(Field("subreddit", row["subreddit"], t1))
+                doc.add(Field("metareddit", row["metareddit"], t1))
                 doc.add(Field("author", row["author"], t1))
                 doc.add(Field("text", row["text"], t2))
                 iw.addDocument(doc)

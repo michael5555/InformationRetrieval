@@ -14,6 +14,7 @@ from org.apache.lucene.analysis.miscellaneous import LimitTokenCountAnalyzer
 
 from org.apache.lucene.queryparser.classic import QueryParser
 from org.apache.lucene.analysis.standard import StandardAnalyzer
+from org.apache.lucene.document import Document
 
 TEXT = "text"
 
@@ -44,7 +45,7 @@ class Querrier(object):
         """
         # prepare searcher to search against
         searcher = IndexSearcher(self.reader)
-        scoreDocs = searcher.search(query, 50).scoreDocs
+        scoreDocs = searcher.search(query, 10).scoreDocs
 
         return scoreDocs
 
@@ -64,9 +65,12 @@ if __name__ == '__main__':
             break
 
         # Get search values and display to user
-        print(value)
         result = searcher.searchWithTerm(value)
-        print(len(result))
         for res in result:
-            print(res)
+            ixreader = IndexSearcher(searcher.reader)
+            doc = ixreader.doc(res.doc)
+            text = doc.get("text")
+            author = doc.get("author")
+
+            print("text: {0} \nauthor: {1} \nscore: {2}\n".format(text,author,res.score))
 

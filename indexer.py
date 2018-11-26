@@ -38,7 +38,7 @@ class Indexer(object):
 
     def parseRedditCSV(self,csvname,t1,t2,iw):
         with open(csvname) as csvfile:
-            csvreader = csv.DictReader(csvfile,fieldnames=["idminusone","id","idfloatminusone","text","redditid","subreddit","metareddit","time","author","ups","downs","authorlinkkarma","authorkarma","authorisgold"])
+            csvreader = csv.DictReader(csvfile,fieldnames=["id","text","redditid","subreddit","metareddit","time","author","ups","downs","authorlinkkarma","authorkarma","authorisgold"])
             next(csvreader)
             for row in csvreader:
                 doc = Document()

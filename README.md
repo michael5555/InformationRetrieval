@@ -9,5 +9,8 @@ Here csvdir needs to be a directory with csv's with the following structure:
 Then run the querier:
     python3 querier.py
 
+# Extra
+added a python3 script to remove dups from the reddit dataset and a bash script to automate for all csv's.
+
 
 

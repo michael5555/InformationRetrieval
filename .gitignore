@@ -1,2 +1,8 @@
 IR.Index
 samples/FacetExample*
+gutenberg/
+gutenbergunzipped/
+gutenbergsubset/
+gutenberg.sh
+gutenbergsubset.sh
+gutenbergsubset.zip

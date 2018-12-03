@@ -1,4 +1,4 @@
-import os, csv, sys, lucene
+import os, csv, sys, lucene, time
 
 from java.nio.file import Paths
 from java.lang import System
@@ -74,6 +74,11 @@ class Indexer(object):
                 print("Didnt find title")
                 self.titlecount += 1
 
+            if title == None and author == None:
+                # Skip this book
+                return
+
+
             text = None
             # Check if indices are correct
             if beginindex == 0 or endindex == 0:
@@ -118,9 +123,10 @@ class Indexer(object):
 if __name__ == '__main__':
     lucene.initVM(vmargs=['-Djava.awt.headless=true'])
     base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+    start_time = time.time()
     if len(sys.argv) == 1:
         Indexer(os.path.join(base_dir, INDEX_DIR))
     else:
         Indexer(os.path.join(base_dir, INDEX_DIR),root=sys.argv[1])
 
-
+    print("Indexing took {} seconds".format(time.time()-start_time))

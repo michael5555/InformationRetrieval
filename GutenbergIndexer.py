@@ -101,6 +101,7 @@ class Indexer(object):
         t2 = FieldType()
         t2.setStored(True)
         t2.setTokenized(True)
+        t2.setStoreTermVectors(True)
         t2.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS)
 
         for filename in os.listdir(root):

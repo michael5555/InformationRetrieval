@@ -16,6 +16,8 @@ from org.apache.lucene.queryparser.classic import QueryParser
 from org.apache.lucene.analysis.standard import StandardAnalyzer
 from org.apache.lucene.document import Document
 from org.apache.lucene.queries.mlt import MoreLikeThis
+from java.io import StringReader;
+
 
 
 TEXT = "text"
@@ -53,19 +55,24 @@ class Querrier(object):
 
     def expandQuery(self,result,nrRelevant):
         searcher = IndexSearcher(self.reader)
+        analyzer = LimitTokenCountAnalyzer(StandardAnalyzer(), 1048576)
+
      
         relevant = []
         mlt = MoreLikeThis(self.reader)
+        mlt.setAnalyzer(analyzer)
         for i in result[0:nrRelevant - 1]:
-            docid = self.reader.doc(i.doc)
-            relevant.append(mlt.like(docid))
+            doc = self.reader.document(i.doc)
+            sr = StringReader(doc.get("content"))
+            relevant.append(sr)
 
-        querybuilder = BooleanQuery.Builder()
+        """querybuilder = BooleanQuery.Builder()
         for i in relevant:
             querybuilder.add(i,BooleanClause.Occur.SHOULD)
 
-        combinedquery = querybuilder.build()
-        scoreDocs = searcher.search(combinedquery, 10).scoreDocs
+        combinedquery = querybuilder.build()"""
+        mltquery = mlt.like("content",relevant)
+        scoreDocs = searcher.search(mltquery, 10).scoreDocs
         return scoreDocs
 
 
@@ -102,11 +109,11 @@ if __name__ == '__main__':
             # Break the loop
             print("The querrier will shut down.")
             break
-        elif expandval == "n" or "no" or "N" or "NO":
+        elif expandval == "n" or expandval == "no" or expandval == "N" or expandval ==  "NO":
             continue
 
-        elif expandval == "y" or "Y" or "Yes" or "YES":
-
+        elif expandval == "y" or expandval ==  "Y" or expandval == "Yes" or expandval == "YES":
+            print("expanding query ...")
             # expand query and output results
             expresult = searcher.expandQuery(result,3)
             for res in expresult:

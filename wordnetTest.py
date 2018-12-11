@@ -14,13 +14,11 @@ lucene.initVM(vmargs=['-Djava.awt.headless=true'])
 class Synonyms:
 
     def __init__(self, analyser=WhitespaceAnalyzer(), file="prolog/wn_s.pl"):
-        self.analyser = analyser
-        self.file = file
 
         self.parser = WordnetSynonymParser(True, True, analyser)
 
         # Read the prolog-file for wordnet in a stringreader
-        PlFile = StringReader(open("prolog/wn_s.pl", 'r').read())
+        PlFile = StringReader(open(file, 'r').read())
 
         # Parse the prologfile with the WordnetSynonymParser
         self.parser.parse(PlFile)
@@ -28,19 +26,19 @@ class Synonyms:
         # Build the synonymmap
         self.map = self.parser.build()
 
-    def getSynonyms(self, query, tokenizer=StandardTokenizer()):
+    def getSynonyms(self, query, tokenizer = StandardTokenizer()):
         '''
         :param query: The query for which to get synonyms
         :param tokenizer: The tokenizer used for synonymgraphfilter
         :return: A tokenStream with the synonyms
         '''
 
+        # Add query to tokenizer
         tokenizer.setReader(StringReader(query))
-        a = SynonymGraphFilter(tokenizer, self.map, True)
-        returnvalue = FlattenGraphFilter(a)
-        tokenizer.close()
-        return returnvalue
 
+        # Use synonymfilter to generate synonyms & flatten to get words from graph
+        synGraph = SynonymGraphFilter(tokenizer, self.map, True)
+        return FlattenGraphFilter(synGraph)
 
     def getSynonymList(self, query):
         '''
@@ -76,13 +74,6 @@ if __name__ == '__main__':
     # Build the synonymmap
     map = parser.build()
 
-    tokenizer = StandardTokenizer()
-    tokenizer.setReader(StringReader(text))
-    a = SynonymGraphFilter(tokenizer, map, True)
-    a = FlattenGraphFilter(a)
+    test = Synonyms()
 
-    charTermAttrib = a.getAttribute(CharTermAttribute.class_)
-    a.reset()
-
-    while a.incrementToken():
-        print(charTermAttrib)
+    print(test.getSynonymList(text))

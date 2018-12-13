@@ -1,4 +1,7 @@
+
 import os, sys, lucene
+lucene.initVM(vmargs=['-Djava.awt.headless=true'])
+
 
 from java.nio.file import Paths
 from java.lang import System
@@ -16,7 +19,9 @@ from org.apache.lucene.queryparser.classic import QueryParser
 from org.apache.lucene.analysis.standard import StandardAnalyzer
 from org.apache.lucene.document import Document
 from org.apache.lucene.queries.mlt import MoreLikeThis
-from java.io import StringReader;
+from java.io import StringReader
+from wordnetTest import Synonyms
+
 
 
 
@@ -77,8 +82,9 @@ class Querrier(object):
 
 
 if __name__ == '__main__':
-    lucene.initVM(vmargs=['-Djava.awt.headless=true'])
     searcher = Querrier(os.path.dirname(os.path.abspath(sys.argv[0])))
+    synonym = Synonyms()
+
 
     while True:
         # Loop and search until the empty string is given
@@ -90,8 +96,14 @@ if __name__ == '__main__':
             print("The querrier will shut down.")
             break
 
+        # Expand query
+        print("Expanding query with synonyms")
+        newQuery = " ".join(synonym.getSynonymList(value))
+        print("Changed query: {}\nto:{}".format(value, newQuery))
         # Get search values and display to user
-        result = searcher.searchWithTerm(value)
+
+        # Get search values and display to user
+        result = searcher.searchWithTerm(newQuery)
         for res in result:
             ixreader = IndexSearcher(searcher.reader)
             doc = ixreader.doc(res.doc)
@@ -102,18 +114,18 @@ if __name__ == '__main__':
 
             print("title: {0}author: {1}score: {2}\n".format(title,author,score))
 
-        print("Do you want to expand your query? [Y/n] (enter empty string to exit):")
+        print("Do you want to perform pseudo relevance feedback? [Y/n] (enter empty string to exit):")
         expandval = input()
 
         if expandval == "":
             # Break the loop
-            print("The querrier will shut down.")
+            print("The querier will shut down.")
             break
         elif expandval == "n" or expandval == "no" or expandval == "N" or expandval ==  "NO":
             continue
 
         elif expandval == "y" or expandval ==  "Y" or expandval == "Yes" or expandval == "YES":
-            print("expanding query ...")
+            print("performing relevance feedback ...")
             # expand query and output results
             expresult = searcher.expandQuery(result,3)
             for res in expresult:

@@ -8,7 +8,7 @@ from org.apache.lucene.analysis.tokenattributes import CharTermAttribute
 from org.apache.lucene.analysis.synonym import SynonymGraphFilter, SynonymMap
 from org.apache.lucene.util import CharsRef
 
-lucene.initVM(vmargs=['-Djava.awt.headless=true'])
+#lucene.initVM(vmargs=['-Djava.awt.headless=true'])
 
 
 class Synonyms:

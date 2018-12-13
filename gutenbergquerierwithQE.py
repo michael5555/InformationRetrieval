@@ -97,7 +97,8 @@ if __name__ == '__main__':
         newQuery = " ".join(synonym.getSynonymList(value))
         print("Changed query: {}\nto:{}".format(value, newQuery))
         # Get search values and display to user
-        result = searcher.searchWithTerm(value)
+        result = searcher.searchWithTerm(newQuery
+        )
         for res in result:
             ixreader = IndexSearcher(searcher.reader)
             doc = ixreader.doc(res.doc)

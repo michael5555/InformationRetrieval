@@ -1,0 +1,3 @@
+ - Title als query -> Hoe hoger het relevante document, hoe beter
+ - Deviatie in scores -> Zien hoe zeker de querier is
+ - Timing van indexing en querying

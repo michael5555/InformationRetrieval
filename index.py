@@ -36,7 +36,9 @@ class Indexer(object):
         self.authorcount = 0
         self.titlecount = 0
         self.errorcount = 0
+
         self.indexDocs(root,iw)
+
 
     def parseBook(self,filename,t1,t2,iw):
         with open(filename, 'r', errors="ignore") as book:
@@ -77,7 +79,6 @@ class Indexer(object):
             if title == None and author == None:
                 # Skip this book
                 return
-
 
             text = None
             # Check if indices are correct

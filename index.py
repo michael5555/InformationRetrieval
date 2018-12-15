@@ -8,6 +8,8 @@ from java.util import Arrays
 from org.apache.lucene.analysis.core import WhitespaceAnalyzer
 from org.apache.lucene.analysis.miscellaneous import LimitTokenCountAnalyzer
 from org.apache.lucene.analysis.standard import StandardAnalyzer
+from org.apache.lucene.analysis.en import EnglishAnalyzer
+
 
 from org.apache.lucene.search import IndexSearcher, TermQuery, MatchAllDocsQuery
 from org.apache.lucene.store import FSDirectory, SimpleFSDirectory
@@ -96,8 +98,8 @@ class Indexer(object):
 
         t1 = FieldType()
         t1.setStored(True)
-        t1.setTokenized(False)
-        t1.setIndexOptions(IndexOptions.DOCS_AND_FREQS)
+        t1.setTokenized(True)
+        t1.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS)
 
         t2 = FieldType()
         t2.setStored(True)

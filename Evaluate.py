@@ -53,7 +53,7 @@ if __name__ == '__main__':
     timeA = time.time()
     for title in tqdm.tqdm(titles):
         newQuery = " ".join(synonym.getSynonymList(title))
-        results = zoek.searchWithTerm(newQuery)
+        results = zoek.searchWithSynonyms(title,newQuery)
         synScore += scoreResult(title, results, reader)
 
     synTime = time.time() - timeA
@@ -62,8 +62,8 @@ if __name__ == '__main__':
     print("Testing querier with relevance feedback ...")
     timeA = time.time()
     for title in tqdm.tqdm(titles):
-        result = zoek.searchWithTerm(title)
-        expresult = zoek.expandQuery(result, 3)
+        result = zoek.searchWithTermSingle(title)
+        expresult = zoek.expandQuery(title,result, 3)
         expScore += scoreResult(title, expresult, reader)
 
     expTime = time.time() - timeA

@@ -32,7 +32,7 @@ if __name__ == '__main__':
         # Get search values and display to user
 
         # Get search values and display to user
-        result = searcher.searchWithTerm(newQuery)
+        result = searcher.searchWithSynonyms(value,newQuery)
         for res in result:
             ixreader = IndexSearcher(searcher.reader)
             doc = ixreader.doc(res.doc)
@@ -56,7 +56,8 @@ if __name__ == '__main__':
         elif expandval == "y" or expandval ==  "Y" or expandval == "Yes" or expandval == "YES":
             print("performing relevance feedback ...")
             # expand query and output results
-            expresult = searcher.expandQuery(result,3)
+            relresult = searcher.searchWithTermSingle(value)
+            expresult = searcher.expandQuery(value,relresult,3)
             for res in expresult:
                 ixreader = IndexSearcher(searcher.reader)
                 doc = ixreader.doc(res.doc)

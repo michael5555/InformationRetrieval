@@ -3,16 +3,17 @@ This is the repo for the Information Retrieval project by Michaël Adriaensen an
 
 # Usage
 first we need to index with this command:  
-    python3 indexer.py <csvdir>  
-Here csvdir needs to be a directory with csv's with the following structure:  
-    "id,text,redditid,subreddit,metareddit,time,author,ups,downs,authorlinkkarma,authorkarma,authorisgold"  
+    python3 index.py <gutenbergtxtdir>  
+Here gutenbergtxtdir needs to be a directory with txt files of the Gutenberg dataset:  
 Then run the querier:  
-    python3 querier.py  
+    python3 searchEngine.py
 
-# Extra
-added a python3 script to remove dups from the reddit dataset and a bash script to automate for all csv's.
+# Evaluation
+To run the evaluation metrics we used, run this command after indexing:
+python3 Evaluate.py  
 
-# Github Repository ( with datasets and other unnecessary stuff)
+
+# Github Repository ( with some unnecessary stuff)
 https://github.com/michael5555/InformationRetrieval.git
 
 

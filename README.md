@@ -3,13 +3,13 @@ This is the repo for the Information Retrieval project by Michaël Adriaensen an
 
 # Usage
 first we need to index with this command:  
-    python3 index.py <gutenbergtxtdir>  
+    python3 index.py gutenbergtxtdir  
 Here gutenbergtxtdir needs to be a directory with txt files of the Gutenberg dataset:  
 Then run the querier:  
     python3 searchEngine.py
 
 # Evaluation
-To run the evaluation metrics we used, run this command after indexing:
+To run the evaluation metrics we used, run this command after indexing:   
 python3 Evaluate.py  
 
 

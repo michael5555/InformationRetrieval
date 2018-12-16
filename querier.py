@@ -94,6 +94,8 @@ class Querrier(object):
         relevant = []
         mlt = MoreLikeThis(self.reader)
         mlt.setAnalyzer(analyzer)
+        mlt.setMaxQueryTerms(10)
+
         for i in result[:nrRelevant]:
             doc = self.reader.document(i.doc)
             sr = StringReader(doc.get("content"))
